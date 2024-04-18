@@ -1,0 +1,6 @@
+server:
+  port: 9000
+myqq:
+  host: 127.0.0.1
+  port: 8877
+  token: liuris

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/MyQQ_SDK_Java(HTTP)(linq).iml" filepath="$PROJECT_DIR$/.idea/MyQQ_SDK_Java(HTTP)(linq).iml" />
+      <module fileurl="file://$PROJECT_DIR$/linq-myqq-spring-boot-starter-master/linq-myqq-spring-boot-starter.iml" filepath="$PROJECT_DIR$/linq-myqq-spring-boot-starter-master/linq-myqq-spring-boot-starter.iml" />
+    </modules>
+  </component>
+</project>
