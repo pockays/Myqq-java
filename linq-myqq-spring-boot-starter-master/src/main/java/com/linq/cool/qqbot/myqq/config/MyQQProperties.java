@@ -18,4 +18,6 @@ public class MyQQProperties {
     private String host;
     private String port;
     private String token;
+    private String master;
+    private String grouprobot;
 }

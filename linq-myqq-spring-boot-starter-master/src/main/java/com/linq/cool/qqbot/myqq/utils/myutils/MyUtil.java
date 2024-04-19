@@ -1,15 +1,22 @@
 package com.linq.cool.qqbot.myqq.utils.myutils;
 
+import com.linq.cool.qqbot.myqq.callback.MyQQMessageCallbackRequest;
 import com.linq.cool.qqbot.myqq.enums.MyQQCommandEnum;
 import com.linq.cool.qqbot.myqq.utils.regex.RegexRule;
 import com.linq.cool.qqbot.myqq.utils.regex.RegexUtils;
+import lombok.extern.slf4j.Slf4j;
 
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author liuris
  * @create 2024-04-18-17:21
  */
+@Slf4j
 public class MyUtil {
     //机器人是否收到信息
     public static boolean isSendMessageToRobot(String receiveMessage) {
@@ -23,4 +30,43 @@ public class MyUtil {
             return null;
         }
     }
+
+    public static String toGBK(String Umsg) {
+        try {
+            byte[] utf8Bytes = Umsg.getBytes("UTF-8");
+            String gkbString = new String(utf8Bytes, Charset.forName("GBK"));
+            return gkbString;
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String getMsgContent(MyQQMessageCallbackRequest callbackRequest){
+        String message = callbackRequest.getMsg();
+        String robotQQ = callbackRequest.getRobotQQ();
+        Pattern pattern = Pattern.compile("(?<=\\[@"+robotQQ+"]).*$");
+        Matcher matcher = pattern.matcher(message);
+        if(matcher.find()){
+            String result = matcher.group();
+            log.info("消息: {}",result);
+            return result;
+        }
+        log.info("没有匹配到信息");
+        return null;
+    }
+
+    public static String GetSpecifiedContent(String content,String regex){
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        if(matcher.find()){
+            String result = matcher.group();
+            log.info("消息: {}",result);
+            return result;
+        }
+        log.info("没有匹配到信息");
+        return null;
+    }
+
 }

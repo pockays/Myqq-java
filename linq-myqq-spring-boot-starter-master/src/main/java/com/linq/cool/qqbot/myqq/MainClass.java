@@ -2,6 +2,8 @@ package com.linq.cool.qqbot.myqq;
 
 
 import com.linq.cool.qqbot.myqq.factory.MyQQRobotCallbackHandlerFactory;
+import com.linq.cool.qqbot.myqq.job.service.JobService;
+import com.linq.cool.qqbot.myqq.job.service.impl.JobServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +14,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class MainClass {
+    @Autowired
     public static void main(String[] args) {
         SpringApplication.run(MainClass.class,args);
     }
+
+
 }

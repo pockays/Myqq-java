@@ -47,7 +47,7 @@ public class MyQQHttpRequestTemplate {
     }
 
     public MyQQResponse doRequest(Object obj, Class<? extends AbstractMyQQRequest> clazz) {
-        if (obj == null) {
+       if (obj == null) {
             return null;
         }
         if (!obj.getClass().equals(clazz)) {

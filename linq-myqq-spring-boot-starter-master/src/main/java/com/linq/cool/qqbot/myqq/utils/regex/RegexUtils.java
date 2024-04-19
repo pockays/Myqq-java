@@ -70,6 +70,7 @@ public class RegexUtils {
         return null;
     }
 
+    //截取2个正则表达式中间的部分
     private static String parseBeginRegexAndEndRegex(RegexRule rule, String fragmentStr) {
         Pattern beginPattern = Pattern.compile(rule.getBeginRegex());
         Matcher beginMatcher = beginPattern.matcher(fragmentStr);
@@ -87,6 +88,7 @@ public class RegexUtils {
         return null;
     }
 
+    //截取符合正则表达式的部分
     private static String parseBeginIndexAndEndIndex(RegexRule rule, String fragmentStr) {
         return fragmentStr.substring(rule.getBeginIndex(), rule.getEndIndex());
     }
