@@ -1,10 +1,8 @@
 package com.linq.cool.qqbot.myqq.job;
 
 import com.linq.cool.qqbot.myqq.enums.MyQQTypeEnum;
-import com.linq.cool.qqbot.myqq.job.service.JobService;
 import com.linq.cool.qqbot.myqq.request.myqq.MyQQApiSendMsgRequest;
 import com.linq.cool.qqbot.myqq.response.MyQQMessageCallbackResponse;
-import com.linq.cool.qqbot.myqq.response.MyQQResponse;
 import com.linq.cool.qqbot.myqq.template.MyQQHttpRequestTemplate;
 import com.linq.cool.qqbot.myqq.utils.myutils.MyUtil;
 import org.quartz.*;
@@ -29,7 +27,7 @@ public class FishJob implements Job {
                 .setInfoType(MyQQTypeEnum.MESSAGE_TYPE_GROUP.getCode())
                 .setGroup(GroupId)
                 .setRobotQQ(RobotQQ)
-                .setContent(MyUtil.toGBK("钓鱼")), MyQQApiSendMsgRequest.class);
+                .setContent("钓鱼"), MyQQApiSendMsgRequest.class);
         MyQQMessageCallbackResponse.intercept();
     }
 }

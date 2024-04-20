@@ -59,7 +59,7 @@ public class MyQQHttpRequestUtil {
                 System.out.println(JSON.toJSONString(request));
                 responseString = HttpClient.textBody(url)
                         .json(JSON.toJSONString(request))
-                        .charset("gbk")
+                        .charset("utf-8")
                         .asString();
                 break;
             default:
@@ -100,7 +100,7 @@ public class MyQQHttpRequestUtil {
                 log.info("\n\n请求: " + function + "， POST, 请求Json体: " + JsonUtils.printJson(request) + " , 编码: utf8\n\n");
                 responseString = HttpClient.textBody(url)
                         .json(JSON.toJSONString(request))
-                        .charset("gbk")
+                        .charset("utf-8")
                         .asString();
                 break;
             default:

@@ -34,7 +34,7 @@ public class MyUtil {
     public static String toGBK(String Umsg) {
         try {
             byte[] utf8Bytes = Umsg.getBytes("UTF-8");
-            String gkbString = new String(utf8Bytes, Charset.forName("GBK"));
+            String gkbString = new String(utf8Bytes, Charset.forName("gbk"));
             return gkbString;
 
         } catch (UnsupportedEncodingException e) {
@@ -46,15 +46,21 @@ public class MyUtil {
     public static String getMsgContent(MyQQMessageCallbackRequest callbackRequest){
         String message = callbackRequest.getMsg();
         String robotQQ = callbackRequest.getRobotQQ();
-        Pattern pattern = Pattern.compile("(?<=\\[@"+robotQQ+"]).*$");
+        Pattern pattern = Pattern.compile("(?<=\\[@"+robotQQ+"])[\\s\\S]*");
         Matcher matcher = pattern.matcher(message);
+        pattern = Pattern.compile("(?<=用户：鱼竿儿 )[\\s\\S]*");
+        Matcher matcher1 = pattern.matcher(message);
+        String result=null;
         if(matcher.find()){
-            String result = matcher.group();
+            result = matcher.group();
             log.info("消息: {}",result);
-            return result;
+        }else if(matcher1.find()){
+            result = matcher1.group();
+            log.info("消息: {}",result);
+        }else{
+            log.info("没有匹配到信息");
         }
-        log.info("没有匹配到信息");
-        return null;
+        return result;
     }
 
     public static String GetSpecifiedContent(String content,String regex){

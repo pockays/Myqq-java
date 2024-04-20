@@ -1,8 +1,6 @@
 package com.linq.cool.qqbot.myqq.job.service;
 
-import org.quartz.CronTrigger;
-import org.quartz.Job;
-import org.quartz.SchedulerException;
+import org.quartz.*;
 
 /**
  * @author liuris
@@ -11,11 +9,18 @@ import org.quartz.SchedulerException;
 
 public interface JobService {
 
-    public void start(String name, String group, String cronExpression, Class<? extends Job> clazz,String GroupId,String Robotqq) throws SchedulerException;
+    public void startbycron(String name, String group, String cronExpression, Class<? extends Job> clazz,String GroupId,String Robotqq) throws SchedulerException;
+
+    public void startbyinterval(String name, String group,int minute, Class<? extends Job> clazz, String GroupId, String Robotqq) throws SchedulerException;
 
     public void pause(String group, String name);
 
-    public void update(CronTrigger cronTrigger, String cronExpression);
+    public void update(Trigger Trigger, String value);
 
-    public CronTrigger getTrigger();
+    public void delete(String jobName, String jobGroup);
+
+    public CronTrigger getCronTrigger();
+
+    public SimpleTrigger getSimpleTrigger();
+
 }

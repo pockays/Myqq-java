@@ -65,7 +65,7 @@ public class RegexUtils {
         if (endMatcher.find()) {
             String endGroup = endMatcher.group();
             int endIndex = fragmentStr.lastIndexOf(endGroup);
-            return fragmentStr.substring(rule.getBeginIndex(), endIndex + 1);
+            return fragmentStr.substring(rule.getBeginIndex(), endIndex);
         }
         return null;
     }
