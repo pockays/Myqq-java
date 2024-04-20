@@ -23,6 +23,11 @@ public class FishJob implements Job {
         String GroupId = jobDetail.getJobDataMap().getString("GroupId");
         String RobotQQ = jobDetail.getJobDataMap().getString("Robotqq");
         System.out.println(String.format("key: %s", jobDetail.getKey()));
+        try{ //防止正好在钓鱼cd结束的那一刹那发出去
+            Thread.sleep(2000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         myQQHttpRequestTemplate.doRequest(new MyQQApiSendMsgRequest()
                 .setInfoType(MyQQTypeEnum.MESSAGE_TYPE_GROUP.getCode())
                 .setGroup(GroupId)
