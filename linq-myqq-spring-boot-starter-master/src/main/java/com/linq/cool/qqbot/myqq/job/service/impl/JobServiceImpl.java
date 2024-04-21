@@ -36,10 +36,11 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void startbyinterval(String name, String group,int minute, Class<? extends Job> clazz, String GroupId,String Robotqq) throws SchedulerException {
-        JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(name, group).usingJobData("GroupId",GroupId).usingJobData("Robotqq",Robotqq).build();
+    public void startbyinterval(String name, String group,int minute, Class<? extends Job> clazz, String GroupId,String Robotqq,boolean overtime) throws SchedulerException {
+        JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(name, group).usingJobData("GroupId",GroupId).usingJobData("Robotqq",Robotqq).usingJobData("overtime",overtime).build();
         String triggerName = String.format("trigger_%s", name);
-        simpleTrigger = (SimpleTrigger)TriggerBuilder.newTrigger().withIdentity(triggerName, group).startAt(futureDate(minute, DateBuilder.IntervalUnit.MINUTE)).build();
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.repeatMinutelyForever(30);
+        simpleTrigger = TriggerBuilder.newTrigger().withIdentity(triggerName, group).startAt(futureDate(minute, DateBuilder.IntervalUnit.MINUTE)).withSchedule(scheduleBuilder).build();
         scheduler.scheduleJob(jobDetail, simpleTrigger);
         if (!scheduler.isStarted()) {
             scheduler.start();
@@ -65,14 +66,15 @@ public class JobServiceImpl implements JobService {
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(value);
             newTrigger=cronTrigger.getTriggerBuilder().withSchedule(scheduleBuilder).build();
         }else{
-            newTrigger=simpleTrigger.getTriggerBuilder().startAt(futureDate(Integer.parseInt(value), DateBuilder.IntervalUnit.MINUTE)).build();
+            SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.repeatMinutelyForever(30);
+            newTrigger=simpleTrigger.getTriggerBuilder().startAt(futureDate(Integer.parseInt(value), DateBuilder.IntervalUnit.MINUTE)).withSchedule(scheduleBuilder).build();
         }
         try {
             scheduler.rescheduleJob(triggerKey, newTrigger);
-            log.info("Update cron trigger {} succeeded!", triggerKey.getName());
+            log.info("Update  trigger {} succeeded!", triggerKey.getName());
         } catch (SchedulerException e) {
             e.printStackTrace();
-            log.info("Update cron trigger {} failed!", triggerKey.getName());
+            log.info("Update  trigger {} failed!", triggerKey.getName());
         }
     }
 

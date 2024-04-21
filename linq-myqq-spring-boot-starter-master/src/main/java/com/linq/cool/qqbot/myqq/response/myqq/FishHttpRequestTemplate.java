@@ -29,20 +29,31 @@ public class FishHttpRequestTemplate {
         }
        String Content =  MyUtil.getMsgContent(callbackRequest).trim();
         switch (Content){
-            case "钓鱼启动！":
+            case "起床了":
                 if(jobService.getCronTrigger()!=null||jobService.getSimpleTrigger()!=null){
                     reponse = "在钓了，在钓了";
                     break;
                 }
                 try {
-                    jobService.startbyinterval("fishjob","Group",30, FishJob.class,callbackRequest.getFromId(),callbackRequest.getRobotQQ());
+                    jobService.startbyinterval("fishjob","Group",0, FishJob.class,callbackRequest.getFromId(),callbackRequest.getRobotQQ(),false);
                 }
                 catch (SchedulerException e){
                     e.printStackTrace();
                 }
-                reponse = "钓鱼";
+                reponse = "钓鱼，启动！";
                 break;
-
+            case "加班" :
+                if(jobService.getSimpleTrigger()!=null){
+                    jobService.delete("fishjob","Group");
+                }
+                try {
+                    jobService.startbyinterval("fishjob","Group",0, FishJob.class,callbackRequest.getFromId(),callbackRequest.getRobotQQ(),true);
+                }
+                catch (SchedulerException e){
+                    e.printStackTrace();
+                }
+                reponse = "黑心老板坏坏";
+                break;
             case "社畜模式":
                 if(jobService.getSimpleTrigger()!=null){
                     jobService.delete("fishjob","Group");
@@ -60,7 +71,7 @@ public class FishHttpRequestTemplate {
                 reponse = "(¦3[▓▓]";
                 break;
             default:
-                reponse= "";
+                reponse= null;
         }
         if(Content.contains("本次耗时")||Content.contains("浪费")){
             String costTime = RegexUtils.parse(Content, new RegexRule.Builder("\\d+分钟", 0, "分钟").build());

@@ -11,7 +11,7 @@ public interface JobService {
 
     public void startbycron(String name, String group, String cronExpression, Class<? extends Job> clazz,String GroupId,String Robotqq) throws SchedulerException;
 
-    public void startbyinterval(String name, String group,int minute, Class<? extends Job> clazz, String GroupId, String Robotqq) throws SchedulerException;
+    public void startbyinterval(String name, String group,int minute, Class<? extends Job> clazz, String GroupId, String Robotqq,boolean overtime) throws SchedulerException;
 
     public void pause(String group, String name);
 

@@ -22,7 +22,37 @@ public class FishJob implements Job {
         JobDetail jobDetail = context.getJobDetail();
         String GroupId = jobDetail.getJobDataMap().getString("GroupId");
         String RobotQQ = jobDetail.getJobDataMap().getString("Robotqq");
+        boolean overtime =jobDetail.getJobDataMap().getBoolean("overtime");
         System.out.println(String.format("key: %s", jobDetail.getKey()));
+        if(overtime){
+            myQQHttpRequestTemplate.doRequest(new MyQQApiSendMsgRequest()
+                    .setInfoType(MyQQTypeEnum.MESSAGE_TYPE_GROUP.getCode())
+                    .setGroup(GroupId)
+                    .setRobotQQ(RobotQQ)
+                    .setContent("一键卖鱼"), MyQQApiSendMsgRequest.class);
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            myQQHttpRequestTemplate.doRequest(new MyQQApiSendMsgRequest()
+                    .setInfoType(MyQQTypeEnum.MESSAGE_TYPE_GROUP.getCode())
+                    .setGroup(GroupId)
+                    .setRobotQQ(RobotQQ)
+                    .setContent("购买鱼饵 稀有鱼饵 1"), MyQQApiSendMsgRequest.class);
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            myQQHttpRequestTemplate.doRequest(new MyQQApiSendMsgRequest()
+                    .setInfoType(MyQQTypeEnum.MESSAGE_TYPE_GROUP.getCode())
+                    .setGroup(GroupId)
+                    .setRobotQQ(RobotQQ)
+                    .setContent("钓鱼"), MyQQApiSendMsgRequest.class);
+            MyQQMessageCallbackResponse.intercept();
+            return;
+        }
         try{ //防止正好在钓鱼cd结束的那一刹那发出去
             Thread.sleep(2000);
         }catch (InterruptedException e){
