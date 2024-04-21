@@ -30,8 +30,9 @@ public class FishHttpRequestTemplate {
        String Content =  MyUtil.getMsgContent(callbackRequest).trim();
         switch (Content){
             case "钓鱼启动！":
-                if(jobService.getCronTrigger()!=null){
-                    jobService.delete("fishjob","Group");
+                if(jobService.getCronTrigger()!=null||jobService.getSimpleTrigger()!=null){
+                    reponse = "在钓了，在钓了";
+                    break;
                 }
                 try {
                     jobService.startbyinterval("fishjob","Group",30, FishJob.class,callbackRequest.getFromId(),callbackRequest.getRobotQQ());
@@ -41,6 +42,7 @@ public class FishHttpRequestTemplate {
                 }
                 reponse = "钓鱼";
                 break;
+
             case "社畜模式":
                 if(jobService.getSimpleTrigger()!=null){
                     jobService.delete("fishjob","Group");
@@ -86,8 +88,8 @@ public class FishHttpRequestTemplate {
     private String buyLure(String Content){
         int amount = 0;
         if(Content.contains("万")){
-            String money = RegexUtils.parse(Content, new RegexRule.Builder("(?<=积分：)\\d+", 0, "万").build());
-            double doubleNum = Double.parseDouble(money);
+            String money = RegexUtils.parse(Content, new RegexRule.Builder("(?<=积分：)\\d+\\.\\d+万|\\d+万", 0, "万").build());
+            double doubleNum = Math.min(Double.parseDouble(money), 2);
             amount = (int)(doubleNum*10000-1000)/2000;
         }else{
             String money =MyUtil.GetSpecifiedContent(Content,"(?<=积分：)\\d+");
