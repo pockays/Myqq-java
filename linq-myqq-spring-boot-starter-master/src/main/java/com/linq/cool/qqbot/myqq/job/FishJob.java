@@ -50,6 +50,16 @@ public class FishJob implements Job {
                     .setGroup(GroupId)
                     .setRobotQQ(RobotQQ)
                     .setContent("钓鱼"), MyQQApiSendMsgRequest.class);
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            myQQHttpRequestTemplate.doRequest(new MyQQApiSendMsgRequest()
+                    .setInfoType(MyQQTypeEnum.MESSAGE_TYPE_GROUP.getCode())
+                    .setGroup(GroupId)
+                    .setRobotQQ(RobotQQ)
+                    .setContent("假装看不见"), MyQQApiSendMsgRequest.class);
             MyQQMessageCallbackResponse.intercept();
             return;
         }
