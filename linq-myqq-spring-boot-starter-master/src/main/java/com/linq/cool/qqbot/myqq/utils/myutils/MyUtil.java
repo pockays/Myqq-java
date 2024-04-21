@@ -48,7 +48,7 @@ public class MyUtil {
         String robotQQ = callbackRequest.getRobotQQ();
         Pattern pattern = Pattern.compile("(?<=\\[@"+robotQQ+"])[\\s\\S]*");
         Matcher matcher = pattern.matcher(message);
-        pattern = Pattern.compile("(?<=用户：鱼竿儿 )[\\s\\S]*");
+        pattern = Pattern.compile("(?<=用户：鱼竿儿 )[\\s\\S]*"); //我的机器人的群名
         Matcher matcher1 = pattern.matcher(message);
         String result=null;
         if(matcher.find()){

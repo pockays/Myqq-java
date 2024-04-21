@@ -39,7 +39,7 @@ public class FishHttpRequestTemplate {
                 catch (SchedulerException e){
                     e.printStackTrace();
                 }
-                reponse = "启动！";
+                reponse = "钓鱼";
                 break;
             case "社畜模式":
                 if(jobService.getSimpleTrigger()!=null){

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import static org.quartz.DateBuilder.futureDate;
+
 /**
  * @author liuris
  * @create 2024-04-19-17:02
@@ -35,11 +37,9 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public void startbyinterval(String name, String group,int minute, Class<? extends Job> clazz, String GroupId,String Robotqq) throws SchedulerException {
-        Date startDate = new Date();
         JobDetail jobDetail = JobBuilder.newJob(clazz).withIdentity(name, group).usingJobData("GroupId",GroupId).usingJobData("Robotqq",Robotqq).build();
         String triggerName = String.format("trigger_%s", name);
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.repeatMinutelyForever(minute);
-        simpleTrigger = TriggerBuilder.newTrigger().withIdentity(triggerName, group).startAt(startDate).withSchedule(scheduleBuilder).build();
+        simpleTrigger = (SimpleTrigger)TriggerBuilder.newTrigger().withIdentity(triggerName, group).startAt(futureDate(minute, DateBuilder.IntervalUnit.MINUTE)).build();
         scheduler.scheduleJob(jobDetail, simpleTrigger);
         if (!scheduler.isStarted()) {
             scheduler.start();
@@ -65,8 +65,7 @@ public class JobServiceImpl implements JobService {
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(value);
             newTrigger=cronTrigger.getTriggerBuilder().withSchedule(scheduleBuilder).build();
         }else{
-            SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.repeatMinutelyForever(Integer.parseInt(value));
-            newTrigger=simpleTrigger.getTriggerBuilder().withSchedule(scheduleBuilder).build();
+            newTrigger=simpleTrigger.getTriggerBuilder().startAt(futureDate(Integer.parseInt(value), DateBuilder.IntervalUnit.MINUTE)).build();
         }
         try {
             scheduler.rescheduleJob(triggerKey, newTrigger);

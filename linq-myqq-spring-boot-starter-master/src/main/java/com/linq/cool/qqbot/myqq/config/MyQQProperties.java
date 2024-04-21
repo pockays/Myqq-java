@@ -20,4 +20,5 @@ public class MyQQProperties {
     private String token;
     private String master;
     private String grouprobot;
+    private String myrobotgroupname;
 }

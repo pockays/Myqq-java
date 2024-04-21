@@ -1,5 +1,4 @@
 package com.linq.cool.qqbot.myqq.command;
-
 import com.linq.cool.qqbot.myqq.annotation.MyQQRobotCommand;
 import com.linq.cool.qqbot.myqq.callback.MyQQMessageCallbackRequest;
 import com.linq.cool.qqbot.myqq.enums.MyQQTypeEnum;
@@ -9,7 +8,6 @@ import com.linq.cool.qqbot.myqq.response.MyQQMessageCallbackResponse;
 import com.linq.cool.qqbot.myqq.response.MyQQResponse;
 import com.linq.cool.qqbot.myqq.response.myqq.FishHttpRequestTemplate;
 import com.linq.cool.qqbot.myqq.template.MyQQHttpRequestTemplate;
-import com.linq.cool.qqbot.myqq.utils.myutils.MyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
