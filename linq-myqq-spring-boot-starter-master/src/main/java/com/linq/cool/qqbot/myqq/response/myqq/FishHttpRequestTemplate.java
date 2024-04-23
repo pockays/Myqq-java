@@ -88,7 +88,7 @@ public class FishHttpRequestTemplate {
             reponse = "一键卖鱼";
         }else if(Content.contains("出售成功")){
             reponse = "我的金币";
-        }else if(Content.contains("积分：")){
+        }else if(Content.contains("存款：")){
             String num = buyLure(Content);
             reponse = "购买鱼饵 稀有鱼饵 "+ num;
             if(num.equals("0")){
