@@ -25,7 +25,7 @@ public class FishHttpRequestTemplate {
         String fromQQ = callbackRequest.getFromQQ();
         String reponse = null;
         if(!myQQProperties.getMaster().equals(fromQQ) && !myQQProperties.getGrouprobot().equals(fromQQ)){
-            return MyUtil.toGBK("我是只属于主人的鱼竿儿哦~") ;
+            return "我是只属于主人的鱼竿儿哦~" ;
         }
        String Content =  MyUtil.getMsgContent(callbackRequest).trim();
         switch (Content){
@@ -73,11 +73,12 @@ public class FishHttpRequestTemplate {
             default:
                 reponse= null;
         }
-        if(Content.contains("本次耗时")||Content.contains("浪费")){
+        if(Content.contains("本次耗时")||Content.contains("浪费")||Content.contains("间隔时间")){
             String costTime = RegexUtils.parse(Content, new RegexRule.Builder("\\d+分钟", 0, "分钟").build());
             //String cronExpression = "0 0/"+ costTime +" 8-18 * * ?";         ps:根据cron的作用 cron触发器的更新是没意义的
             jobService.update(jobService.getSimpleTrigger(),costTime);
         }
+
         else if(Content.contains("鱼饵已经用完")){
             reponse = "一键卖鱼";
         }else if(Content.contains("出售成功")){
@@ -92,6 +93,10 @@ public class FishHttpRequestTemplate {
             reponse = "钓鱼";
         }else if(Content.contains("假装看不见")){
             reponse = "假装看不见";
+        }else if(Content.contains("逃离了你的魔爪")){
+            reponse = "钓鱼";
+        }else if(Content.contains("发送信息")){
+            reponse = MyUtil.GetSpecifiedContent(Content,"(?<=发送信息：)[\\s\\S]*");
         }
         return reponse;
     }
