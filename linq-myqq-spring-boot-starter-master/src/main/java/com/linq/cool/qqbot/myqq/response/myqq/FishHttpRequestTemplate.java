@@ -102,6 +102,8 @@ public class FishHttpRequestTemplate {
             reponse = "钓鱼";
         }else if(Content.contains("发送信息")){
             reponse = MyUtil.GetSpecifiedContent(Content,"(?<=发送信息：)[\\s\\S]*");
+        }else if(Content.contains("宝箱")){
+            reponse = "钓鱼";
         }
         return reponse;
     }
